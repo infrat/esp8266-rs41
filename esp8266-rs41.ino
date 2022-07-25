@@ -40,11 +40,11 @@
 #endif
 
 #define TXFREQ_DEFAULT   433.500 // defaul tx freq when no frequency has been saved on EEPROM
-#define GETSERIALTIMEOUT 1200    // time used to read from RS41 serial 2000 is OK
-#define SLOWTIME_CMD      800    // time to wait for each keypress to enter command mode, 2000 is OK
+#define GETSERIALTIMEOUT 2000    // time used to read from RS41 serial 2000 is OK
+#define SLOWTIME_CMD      2000    // time to wait for each keypress to enter command mode, 2000 is OK
 #define SLOWTIME          300    // time to wait for each keypress to select menu entries and input data 300 is ok
 #define TIME2SLEEP        180    // default time from boot to go to deep sleep mode to save power. Wakeup on reset or power on
-//#define DEBUG                  // if defined print debugging information on serial port
+// #define DEBUG                  // if defined print debugging information on serial port
 #define STS_ERROR  99            // status error
 #define STS_OK    100            // status OK
 
@@ -210,9 +210,9 @@ inline void rs41_slow_write (char *buf, int maxlen, int msdelay) {
 
 inline bool rs41_enter_command_mode () {
   Serial.println("-----> Sending STwsv to enter command mode");
-  //rs41_slow_write("\rSTwsv\r",10,SLOWTIME_CMD);
-  rs41_slow_write("\rST",10,SLOWTIME_CMD);
-  rs41_slow_write("wsv\r",10,SLOWTIME);
+  rs41_slow_write("\rSTwsv\r",10,SLOWTIME_CMD);
+  // rs41_slow_write("\rST",10,SLOWTIME_CMD);
+  // rs41_slow_write("wsv\r",10,SLOWTIME);
   rs41_get_serial(GETSERIALTIMEOUT);
   if (buf[buflastline+1] == '>') {
     Serial.println("-----> Entered Command mode");
